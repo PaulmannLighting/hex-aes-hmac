@@ -3,7 +3,7 @@ use anyhow::anyhow;
 use cbc::cipher::block_padding::Pkcs7;
 use cbc::cipher::{BlockEncryptMut, KeyIvInit};
 use cbc::Encryptor;
-use cipher::{Cipher, Header};
+pub use cipher::{Cipher, Header};
 use hex::FromHex;
 use hmac::{Hmac, Mac};
 use rand_core::CryptoRngCore;
