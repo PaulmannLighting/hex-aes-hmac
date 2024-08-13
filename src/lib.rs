@@ -6,7 +6,7 @@ use cbc::Encryptor;
 pub use cipher::{Cipher, Header};
 use hex::FromHex;
 use hmac::{Hmac, Mac};
-use rand_core::CryptoRngCore;
+use rand::{CryptoRng, RngCore};
 use sha2::Sha256;
 
 mod cipher;
@@ -21,7 +21,7 @@ pub trait Encrypt {
 
 impl<T> Encrypt for T
 where
-    T: CryptoRngCore,
+    T: CryptoRng + RngCore,
 {
     fn encrypt(&mut self, plaintext: &[u8], key: &[u8]) -> anyhow::Result<Cipher> {
         let mut iv = [0; 16];
