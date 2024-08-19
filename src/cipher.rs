@@ -1,6 +1,6 @@
 mod header;
 
-use crate::calculate_hmac;
+use crate::hmac::calculate_hmac;
 use aes::cipher::KeyIvInit;
 use aes::Aes256;
 use anyhow::anyhow;
