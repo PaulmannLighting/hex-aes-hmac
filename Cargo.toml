@@ -5,7 +5,6 @@ edition = "2021"
 
 [dependencies]
 aes = "0.8"
-anyhow = "1.0"
 cbc = { version = "0.1", features = ["alloc", "block-padding"] }
 hex = "0.4"
 hmac = "0.12"

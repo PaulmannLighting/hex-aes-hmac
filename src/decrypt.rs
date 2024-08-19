@@ -1,5 +1,5 @@
 pub use crate::cipher::Cipher;
-use anyhow::anyhow;
+use crate::Error;
 use hex::FromHex;
 
 pub trait Decrypt {
@@ -7,23 +7,23 @@ pub trait Decrypt {
     ///
     /// # Errors
     /// Returns an [`anyhow::Error`] on errors.
-    fn decrypt(&self, key: &[u8]) -> anyhow::Result<Box<[u8]>>;
+    fn decrypt(&self, key: &[u8]) -> Result<Box<[u8]>, Error>;
 }
 
 impl Decrypt for &str {
-    fn decrypt(&self, key: &[u8]) -> anyhow::Result<Box<[u8]>> {
+    fn decrypt(&self, key: &[u8]) -> Result<Box<[u8]>, Error> {
         let payload = Cipher::from_hex(self)?;
 
         if !payload.is_hmac_valid(key) {
-            return Err(anyhow!("Invalid HMAC checksum"));
+            return Err(Error::InvalidHmac);
         }
 
-        payload.decrypt(key).map_err(|error| anyhow!("{error}"))
+        Ok(payload.decrypt(key)?)
     }
 }
 
 impl Decrypt for String {
-    fn decrypt(&self, key: &[u8]) -> anyhow::Result<Box<[u8]>> {
+    fn decrypt(&self, key: &[u8]) -> Result<Box<[u8]>, Error> {
         self.as_str().decrypt(key)
     }
 }

@@ -1,11 +1,7 @@
 use hmac::{Hmac, Mac};
 use sha2::Sha256;
-pub fn calculate_hmac(
-    iv: &[u8],
-    payload: &[u8],
-    key: &[u8],
-    hmac_key: &[u8],
-) -> anyhow::Result<[u8; 32]> {
+
+pub fn hmac(iv: &[u8], payload: &[u8], key: &[u8], hmac_key: &[u8]) -> crate::Result<[u8; 32]> {
     let mut mac = Hmac::<Sha256>::new_from_slice(hex::encode(hmac_key).as_bytes())?;
     mac.update(hex::encode(iv).as_bytes());
     mac.update(hex::encode(payload).as_bytes());

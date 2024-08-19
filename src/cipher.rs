@@ -1,9 +1,9 @@
 mod header;
 
-use crate::hmac::calculate_hmac;
+use crate::hmac::hmac;
+use crate::Error;
 use aes::cipher::KeyIvInit;
 use aes::Aes256;
-use anyhow::anyhow;
 use cbc::cipher::block_padding::{Pkcs7, UnpadError};
 use cbc::cipher::BlockDecryptMut;
 use cbc::Decryptor;
@@ -25,7 +25,7 @@ impl Cipher {
 
     #[must_use]
     pub fn is_hmac_valid(&self, key: &[u8]) -> bool {
-        calculate_hmac(self.header.iv(), &self.ciphertext, key, self.header.key())
+        hmac(self.header.iv(), &self.ciphertext, key, self.header.key())
             .map(|hmac| hmac == self.header.hmac())
             .unwrap_or(false)
     }
@@ -42,7 +42,7 @@ impl Cipher {
 }
 
 impl FromHex for Cipher {
-    type Error = anyhow::Error;
+    type Error = Error;
 
     fn from_hex<T>(hex: T) -> Result<Self, Self::Error>
     where
@@ -53,14 +53,14 @@ impl FromHex for Cipher {
 }
 
 impl TryFrom<&[u8]> for Cipher {
-    type Error = anyhow::Error;
+    type Error = Error;
 
     fn try_from(bytes: &[u8]) -> Result<Self, Self::Error> {
         Ok(Self::new(
             Header::try_from(bytes)?,
             bytes
                 .get(Header::SIZE..)
-                .ok_or_else(|| anyhow!("Too few bytes: {}", bytes.len()))?
+                .ok_or(Error::MissingBytes("header"))?
                 .into(),
         ))
     }

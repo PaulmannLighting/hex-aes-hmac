@@ -1,4 +1,4 @@
-use anyhow::anyhow;
+use crate::Error;
 use hex::ToHex;
 
 const IV_SIZE: usize = 16;
@@ -37,21 +37,21 @@ impl Header {
 }
 
 impl TryFrom<&[u8]> for Header {
-    type Error = anyhow::Error;
+    type Error = Error;
 
     fn try_from(bytes: &[u8]) -> Result<Self, Self::Error> {
         Ok(Self {
             iv: bytes
                 .get(0..KEY_SIZE)
-                .ok_or_else(|| anyhow!("Too few bytes: {}", bytes.len()))?
+                .ok_or(Error::MissingBytes("iv"))?
                 .try_into()?,
             key: bytes
                 .get(KEY_SIZE..IV_SIZE + KEY_SIZE)
-                .ok_or_else(|| anyhow!("Too few bytes: {}", bytes.len()))?
+                .ok_or(Error::MissingBytes("key"))?
                 .try_into()?,
             hmac: bytes
                 .get(IV_SIZE + KEY_SIZE..Self::SIZE)
-                .ok_or_else(|| anyhow!("Too few bytes: {}", bytes.len()))?
+                .ok_or(Error::MissingBytes("hmac"))?
                 .try_into()?,
         })
     }
