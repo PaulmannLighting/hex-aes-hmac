@@ -1,5 +1,4 @@
-pub use crate::cipher::Cipher;
-use crate::Error;
+use crate::{Cipher, Error};
 use hex::FromHex;
 
 pub trait Decrypt {

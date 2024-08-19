@@ -4,7 +4,7 @@ mod encrypt;
 mod error;
 mod hmac;
 
-pub use cipher::Cipher;
+pub use cipher::{Cipher, Header};
 pub use decrypt::Decrypt;
 pub use encrypt::Encrypt;
 pub use error::{Error, Kind};

@@ -1,5 +1,5 @@
-use crate::cipher::{Cipher, Header};
 use crate::hmac::hmac;
+use crate::{Cipher, Header};
 use aes::Aes256;
 use cbc::cipher::block_padding::Pkcs7;
 use cbc::cipher::{BlockEncryptMut, KeyIvInit};
