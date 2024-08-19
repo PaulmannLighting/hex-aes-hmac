@@ -10,20 +10,17 @@ pub trait Decrypt {
     fn decrypt(&self, key: &[u8]) -> Result<Box<[u8]>, Error>;
 }
 
-impl Decrypt for &str {
+impl<T> Decrypt for T
+where
+    T: AsRef<str>,
+{
     fn decrypt(&self, key: &[u8]) -> Result<Box<[u8]>, Error> {
-        let payload = Cipher::from_hex(self)?;
+        let payload = Cipher::from_hex(self.as_ref())?;
 
         if !payload.is_hmac_valid(key) {
             return Err(Error::InvalidHmac);
         }
 
         Ok(payload.decrypt(key)?)
-    }
-}
-
-impl Decrypt for String {
-    fn decrypt(&self, key: &[u8]) -> Result<Box<[u8]>, Error> {
-        self.as_str().decrypt(key)
     }
 }
