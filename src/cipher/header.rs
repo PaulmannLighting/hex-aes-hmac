@@ -1,4 +1,4 @@
-use crate::Error;
+use crate::{Error, Kind};
 use hex::ToHex;
 
 const IV_SIZE: usize = 16;
@@ -43,15 +43,15 @@ impl TryFrom<&[u8]> for Header {
         Ok(Self {
             iv: bytes
                 .get(0..KEY_SIZE)
-                .ok_or(Error::MissingBytes("iv"))?
+                .ok_or(Error::MissingBytes(Kind::Iv))?
                 .try_into()?,
             key: bytes
                 .get(KEY_SIZE..IV_SIZE + KEY_SIZE)
-                .ok_or(Error::MissingBytes("key"))?
+                .ok_or(Error::MissingBytes(Kind::Key))?
                 .try_into()?,
             hmac: bytes
                 .get(IV_SIZE + KEY_SIZE..Self::SIZE)
-                .ok_or(Error::MissingBytes("hmac"))?
+                .ok_or(Error::MissingBytes(Kind::Hmac))?
                 .try_into()?,
         })
     }

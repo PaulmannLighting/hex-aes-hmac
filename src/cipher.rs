@@ -1,7 +1,7 @@
 mod header;
 
 use crate::hmac::hmac;
-use crate::Error;
+use crate::{Error, Kind};
 use aes::cipher::KeyIvInit;
 use aes::Aes256;
 use cbc::cipher::block_padding::{Pkcs7, UnpadError};
@@ -60,7 +60,7 @@ impl TryFrom<&[u8]> for Cipher {
             Header::try_from(bytes)?,
             bytes
                 .get(Header::SIZE..)
-                .ok_or(Error::MissingBytes("header"))?
+                .ok_or(Error::MissingBytes(Kind::Header))?
                 .into(),
         ))
     }

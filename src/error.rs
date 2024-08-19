@@ -1,6 +1,9 @@
+mod kind;
+
 use aes::cipher::block_padding::UnpadError;
 use aes::cipher::InvalidLength;
 use hex::FromHexError;
+pub use kind::Kind;
 use std::array::TryFromSliceError;
 use std::fmt::{Display, Formatter};
 
@@ -10,7 +13,7 @@ pub enum Error {
     TryFromSliceError(TryFromSliceError),
     FromHexError(FromHexError),
     UnpadError(UnpadError),
-    MissingBytes(&'static str),
+    MissingBytes(Kind),
     InvalidHmac,
 }
 
@@ -21,7 +24,7 @@ impl Display for Error {
             Self::TryFromSliceError(error) => Display::fmt(error, f),
             Self::FromHexError(error) => Display::fmt(error, f),
             Self::UnpadError(error) => Display::fmt(error, f),
-            Self::MissingBytes(message) => write!(f, "Missing bytes: {message}"),
+            Self::MissingBytes(kind) => write!(f, "Missing bytes: {kind}"),
             Self::InvalidHmac => f.write_str("Invalid HMAC"),
         }
     }
