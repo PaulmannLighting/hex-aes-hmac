@@ -36,7 +36,8 @@ impl std::error::Error for Error {
             Self::InvalidLength(error) => Some(error),
             Self::TryFromSliceError(error) => Some(error),
             Self::FromHexError(error) => Some(error),
-            Self::UnpadError(_) | Self::MissingBytes(_) | Self::InvalidHmac => None,
+            Self::MissingBytes(kind) => Some(kind),
+            Self::UnpadError(_) | Self::InvalidHmac => None,
         }
     }
 }
