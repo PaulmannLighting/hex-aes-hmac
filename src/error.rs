@@ -9,13 +9,20 @@ pub use kind::Kind;
 
 mod kind;
 
+/// An error that can occur during encryption or decryption.
 #[derive(Clone, Copy, Debug)]
 pub enum Error {
+    /// The length of the input is invalid.
     InvalidLength(InvalidLength),
+    /// An error occurred when converting a slice to an array.
     TryFromSliceError(TryFromSliceError),
+    /// An error an occurred when converting a hex string to bytes.
     FromHexError(FromHexError),
+    /// An error occurred when unpadding a block.
     UnpadError(UnpadError),
+    /// Certain bytes are missing.
     MissingBytes(Kind),
+    /// The HMAC is invalid.
     InvalidHmac,
 }
 

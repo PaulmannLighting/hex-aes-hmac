@@ -10,6 +10,7 @@ use crate::{
     Cipher, Header,
 };
 
+/// Trait to encrypt a plaintext.
 pub trait Encrypt {
     /// Encrypt the plaintext using the key.
     ///
