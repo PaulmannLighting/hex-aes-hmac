@@ -21,7 +21,7 @@ pub struct Cipher {
 impl Cipher {
     /// Create a new encrypted payload from a header and ciphertext.
     #[must_use]
-    pub fn new(header: Header, ciphertext: Box<[u8]>) -> Self {
+    pub const fn new(header: Header, ciphertext: Box<[u8]>) -> Self {
         Self { header, ciphertext }
     }
 
