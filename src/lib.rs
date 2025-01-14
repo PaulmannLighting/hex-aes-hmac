@@ -1,4 +1,4 @@
-//! Decryption of AES encrypted text with HMAC validation.
+//! Decryption of AES encrypted text with HMAC validation with hexadecimal encoding.
 
 pub use cipher::{Cipher, Header};
 pub use decrypt::Decrypt;
