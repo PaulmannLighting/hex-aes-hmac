@@ -12,6 +12,7 @@ pub use header::{Header, IV_SIZE, KEY_SIZE};
 
 mod header;
 
+/// An encrypted cipher text.
 #[derive(Debug, Eq, PartialEq)]
 pub struct Cipher {
     header: Header,

@@ -2,6 +2,7 @@ use hex::FromHex;
 
 use crate::{Cipher, Error};
 
+/// Trait to decrypt a cipher text.
 pub trait Decrypt {
     /// Decrypt the cipher text using the key.
     ///
