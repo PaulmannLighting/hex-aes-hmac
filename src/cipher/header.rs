@@ -1,5 +1,6 @@
-use crate::{Error, Kind};
 use hex::ToHex;
+
+use crate::{Error, Kind};
 
 const IV_SIZE: usize = 16;
 const KEY_SIZE: usize = 16;

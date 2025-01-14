@@ -1,10 +1,11 @@
-use crate::hmac::hmac;
-use crate::{Cipher, Header};
 use aes::Aes256;
 use cbc::cipher::block_padding::Pkcs7;
 use cbc::cipher::{BlockEncryptMut, KeyIvInit};
 use cbc::Encryptor;
 use rand::{CryptoRng, RngCore};
+
+use crate::hmac::hmac;
+use crate::{Cipher, Header};
 
 pub trait Encrypt {
     /// Encrypt the plaintext using the key.

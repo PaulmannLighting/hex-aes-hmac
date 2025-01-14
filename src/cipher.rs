@@ -1,14 +1,16 @@
-mod header;
-
-use crate::hmac::hmac;
-use crate::{Error, Kind};
 use aes::cipher::KeyIvInit;
 use aes::Aes256;
 use cbc::cipher::block_padding::{Pkcs7, UnpadError};
 use cbc::cipher::BlockDecryptMut;
 use cbc::Decryptor;
-pub use header::Header;
 use hex::{FromHex, ToHex};
+
+use crate::hmac::hmac;
+use crate::{Error, Kind};
+
+pub use header::Header;
+
+mod header;
 
 #[derive(Debug, Eq, PartialEq)]
 pub struct Cipher {

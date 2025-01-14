@@ -1,11 +1,13 @@
-mod kind;
+use std::array::TryFromSliceError;
+use std::fmt::{Display, Formatter};
 
 use aes::cipher::block_padding::UnpadError;
 use aes::cipher::InvalidLength;
 use hex::FromHexError;
+
 pub use kind::Kind;
-use std::array::TryFromSliceError;
-use std::fmt::{Display, Formatter};
+
+mod kind;
 
 #[derive(Clone, Copy, Debug)]
 pub enum Error {

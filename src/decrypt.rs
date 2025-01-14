@@ -1,5 +1,6 @@
-use crate::{Cipher, Error};
 use hex::FromHex;
+
+use crate::{Cipher, Error};
 
 pub trait Decrypt {
     /// Decrypt the cipher text using the key.
