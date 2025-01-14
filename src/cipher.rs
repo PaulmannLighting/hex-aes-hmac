@@ -26,6 +26,7 @@ impl Cipher {
         Self { header, ciphertext }
     }
 
+    /// Determine whether the HMAC is valid.
     #[must_use]
     pub fn is_hmac_valid(&self, key: &[u8]) -> bool {
         hmac(self.header.iv(), &self.ciphertext, key, self.header.key())

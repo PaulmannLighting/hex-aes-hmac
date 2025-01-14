@@ -6,6 +6,7 @@ pub const IV_SIZE: usize = 16;
 pub const KEY_SIZE: usize = 16;
 const HMAC_SIZE: usize = 32;
 
+/// A header containing the initialization vector, key, and HMAC.
 #[derive(Debug, Eq, PartialEq)]
 pub struct Header {
     iv: [u8; IV_SIZE],
@@ -14,23 +15,28 @@ pub struct Header {
 }
 
 impl Header {
+    /// Total size of the header.
     pub const SIZE: usize = IV_SIZE + KEY_SIZE + HMAC_SIZE;
 
+    /// Create a new header from an IV, key, and HMAC.
     #[must_use]
     pub const fn new(iv: [u8; IV_SIZE], key: [u8; KEY_SIZE], hmac: [u8; HMAC_SIZE]) -> Self {
         Self { iv, key, hmac }
     }
 
+    /// Return the initialization vector.
     #[must_use]
     pub const fn iv(&self) -> &[u8] {
         &self.iv
     }
 
+    /// Return the key.
     #[must_use]
     pub const fn key(&self) -> &[u8] {
         &self.key
     }
 
+    /// Return the HMAC.
     #[must_use]
     pub const fn hmac(&self) -> &[u8] {
         &self.hmac

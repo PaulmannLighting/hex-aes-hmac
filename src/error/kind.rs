@@ -1,11 +1,16 @@
 use std::error::Error;
 use std::fmt::Display;
 
+/// The kind of missing bytes.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Kind {
+    /// The initialization vector is missing.
     Iv,
+    /// The key is missing.
     Key,
+    /// The HMAC is missing.
     Hmac,
+    /// The header is missing.
     Header,
 }
 
