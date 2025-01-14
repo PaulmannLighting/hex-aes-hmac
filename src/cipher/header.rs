@@ -2,8 +2,8 @@ use hex::ToHex;
 
 use crate::{Error, Kind};
 
-const IV_SIZE: usize = 16;
-const KEY_SIZE: usize = 16;
+pub const IV_SIZE: usize = 16;
+pub const KEY_SIZE: usize = 16;
 const HMAC_SIZE: usize = 32;
 
 #[derive(Debug, Eq, PartialEq)]

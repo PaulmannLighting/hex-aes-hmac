@@ -4,8 +4,11 @@ use cbc::cipher::{BlockEncryptMut, KeyIvInit};
 use cbc::Encryptor;
 use rand::{CryptoRng, RngCore};
 
-use crate::hmac::hmac;
-use crate::{Cipher, Header};
+use crate::{
+    cipher::{IV_SIZE, KEY_SIZE},
+    hmac::hmac,
+    Cipher, Header,
+};
 
 pub trait Encrypt {
     /// Encrypt the plaintext using the key.
@@ -20,9 +23,9 @@ where
     T: CryptoRng + RngCore,
 {
     fn encrypt(&mut self, plaintext: &[u8], key: &[u8]) -> crate::Result<Cipher> {
-        let mut iv = [0; 16];
+        let mut iv = [0; IV_SIZE];
         self.fill_bytes(&mut iv);
-        let mut hmac_key = [0; 16];
+        let mut hmac_key = [0; KEY_SIZE];
         self.fill_bytes(&mut hmac_key);
         let payload = Encryptor::<Aes256>::new(key.into(), iv.as_slice().into())
             .encrypt_padded_vec_mut::<Pkcs7>(plaintext);

@@ -8,7 +8,7 @@ use hex::{FromHex, ToHex};
 use crate::hmac::hmac;
 use crate::{Error, Kind};
 
-pub use header::Header;
+pub use header::{Header, IV_SIZE, KEY_SIZE};
 
 mod header;
 
